@@ -1,14 +1,13 @@
 const cheerio = require("cheerio"); // khai báo module cheerio
-
 const request = require("request-promise"); // khai báo module request-promise
 
 let urlStr = `https://vinabiz.us`;
 let strRq = "/company/detail";
 async function getListUrl() {
+  let listUrl = [];
   await request(`${urlStr}/company`, (error, response, html) => {
     if (!error && response.statusCode == 200) {
       const $ = cheerio.load(html);
-      let listUrl = [];
       $(".well")
         .find("a")
         .each((idx, el) => {
@@ -17,9 +16,9 @@ async function getListUrl() {
             listUrl.push(val);
           }
         });
-      return listUrl;
     }
   });
+  return listUrl;
 }
 let tmp =
   "/company/detail/cong-ty-co-phan-co-khi-vnc/3000390030003100310032003500350033003300";
@@ -28,16 +27,36 @@ async function getDetail(url) {
   let data = [];
   await request(`${urlStr}${url}`, (error, response, html) => {
     if (!error && response.statusCode == 200) {
-      console.log("yes");
       const $ = cheerio.load(html);
       $(".table-responsive")
-        .find("td")
+        .find("td:not(.bg_table_th)")
         .each((i, el) => {
-          const val = $(el).text();
-          data.push(val);
+          let val = $(el).text() || "";
+          val = val.replace(/\n/g, "");
+          if (!val.includes("adsbygoogle")) {
+            data.push(val);
+          }
         });
     }
   });
-  console.log(data);
+  let obj = {};
+  data.forEach((val, i) => {
+    if (i % 2 == 0 && !obj[val]) {
+      obj[val] = data[i + 1];
+    } else if (i % 2 == 0 && obj[val]) {
+      obj[val + "1"] = data[i + 1];
+    }
+  });
+  return obj;
 }
-getDetail(tmp);
+async function handleData() {
+  const listUrl = await getListUrl();
+  let arrData = await Promise.all(
+    listUrl.map(async (item) => {
+      return await getDetail(item);
+    })
+  );
+  console.log(arrData);
+}
+// getDetail(tmp);
+handleData();
