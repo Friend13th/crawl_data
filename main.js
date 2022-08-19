@@ -1,5 +1,7 @@
 const cheerio = require("cheerio"); // khai báo module cheerio
 const request = require("request-promise"); // khai báo module request-promise
+const fs = require("fs");
+const XlsxTemplate = require("xlsx-template-ex");
 
 let urlStr = `https://vinabiz.us`;
 let strRq = "/company/detail";
@@ -20,8 +22,6 @@ async function getListUrl() {
   });
   return listUrl;
 }
-let tmp =
-  "/company/detail/cong-ty-co-phan-co-khi-vnc/3000390030003100310032003500350033003300";
 
 async function getDetail(url) {
   let data = [];
@@ -49,6 +49,7 @@ async function getDetail(url) {
   });
   return obj;
 }
+
 async function handleData() {
   const listUrl = await getListUrl();
   let arrData = await Promise.all(
@@ -56,7 +57,23 @@ async function handleData() {
       return await getDetail(item);
     })
   );
+  const data = {
+    reportBuildDate: Date.now(),
+    results: arrData,
+  };
+
   console.log(arrData);
+  await XlsxTemplate.xlsxBuildByTemplate(data, "template2.xlsx")
+    .then((buffer) =>
+      fs.writeFileSync(`./report_${data.reportBuildDate}.xlsx`, buffer)
+    )
+    .catch((error) => console.log("xlsxHelper error:", error));
+
+  // write file response.json
+  // arrData = JSON.stringify(arrData);
+  // fs.writeFile("response.json", arrData, "utf8", () => {
+  //   console.log("write success");
+  // });
 }
 // getDetail(tmp);
 handleData();
