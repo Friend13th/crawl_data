@@ -2,9 +2,11 @@ const cheerio = require("cheerio"); // khai báo module cheerio
 const request = require("request-promise"); // khai báo module request-promise
 const fs = require("fs");
 const XlsxTemplate = require("xlsx-template-ex");
+const xlsx = require("json-as-xlsx");
 
 let urlStr = `https://vinabiz.us`;
 let strRq = "/company/detail";
+
 async function getListUrl() {
   let listUrl = [];
   await request(`${urlStr}/company`, (error, response, html) => {
@@ -57,23 +59,29 @@ async function handleData() {
       return await getDetail(item);
     })
   );
-  const data = {
-    reportBuildDate: Date.now(),
-    results: arrData,
-  };
-
-  console.log(arrData);
-  await XlsxTemplate.xlsxBuildByTemplate(data, "template2.xlsx")
-    .then((buffer) =>
-      fs.writeFileSync(`./report_${data.reportBuildDate}.xlsx`, buffer)
-    )
-    .catch((error) => console.log("xlsxHelper error:", error));
-
   // write file response.json
   // arrData = JSON.stringify(arrData);
   // fs.writeFile("response.json", arrData, "utf8", () => {
   //   console.log("write success");
   // });
+  console.log(arrData);
+
+  const exportData = [
+    {
+      sheet: "Page 1",
+      columns: Object.keys(arrData[0]).map((item) => {
+        return { label: item, value: item };
+      }),
+      content: arrData,
+    },
+  ];
+  let settings = {
+    fileName: `./export/out_${Date.now()}`, // Name of the resulting spreadsheet
+    extraLength: 3, // A bigger number means that columns will be wider
+    writeOptions: {}, // Style options from https://github.com/SheetJS/sheetjs#writing-options
+  };
+  xlsx(exportData, settings);
 }
+
 // getDetail(tmp);
 handleData();
