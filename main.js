@@ -1,7 +1,6 @@
 const cheerio = require("cheerio"); // khai báo module cheerio
 const request = require("request-promise"); // khai báo module request-promise
 const fs = require("fs");
-const XlsxTemplate = require("xlsx-template-ex");
 const xlsx = require("json-as-xlsx");
 
 let urlStr = `https://vinabiz.us`;
@@ -60,10 +59,10 @@ async function handleData() {
     })
   );
   // write file response.json
-  // arrData = JSON.stringify(arrData);
-  // fs.writeFile("response.json", arrData, "utf8", () => {
-  //   console.log("write success");
-  // });
+  let jsonData = JSON.stringify(arrData);
+  fs.writeFile("./export/response.json", jsonData, "utf8", () => {
+    console.log("write success");
+  });
   console.log(arrData);
 
   const exportData = [
