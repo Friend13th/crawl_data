@@ -59,12 +59,17 @@ async function handleData() {
     })
   );
   // write file response.json
+  return arrData;
+}
+function exportJson() {
+  let arrData = handleData();
   let jsonData = JSON.stringify(arrData);
   fs.writeFile("./export/response.json", jsonData, "utf8", () => {
     console.log("write success");
   });
-  console.log(arrData);
-
+}
+function exportExcel() {
+  const arrData = handleData();
   const exportData = [
     {
       sheet: "Page 1",
@@ -82,5 +87,8 @@ async function handleData() {
   xlsx(exportData, settings);
 }
 
-// getDetail(tmp);
-handleData();
+module.exports = {
+  handleData,
+  exportJson,
+  exportExcel,
+};

@@ -3,17 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Scrawl data</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 
 <body>
-    <h1>Hello World!</h1>
-    <p>
-        We are using Node.js <span id="node-version"></span>,
-        Chromium <span id="chrome-version"></span>,
-        and Electron <span id="electron-version"></span>.
-    </p>
+    <button class="btn btn-primary" id="run-data">Chạy</button>
+    <button class="btn btn-primary" id="export-excel">Xuất ra excel</button>
+
+    <table class="table">
+        <thead class="table table-striped">
+            <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tên chính thức</th>
+                <th scope="col">Mã doanh nghiệp</th>
+                <th scope="col">Địa chỉ trụ sở</th>
+                <th scope="col">Người đại diện</th>
+                <th scope="col">Điện thoại</th>
+                <th scope="col">Email</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    test
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
 </body>
 
 </html>
