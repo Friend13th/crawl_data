@@ -1,6 +1,8 @@
-const { exportExcel, handleData, exportJson } = require("./main");
+// import { exportExcel, handleData, exportJson } from "./main";
+function getData() {
+  alert("as");
+}
 window.addEventListener("DOMContentLoaded", () => {
-  function getData() {}
   document.querySelector("#run-data").addEventListener("click", () => {
     getData();
   });

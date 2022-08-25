@@ -1,5 +1,5 @@
-const cheerio = require("cheerio"); // khai báo module cheerio
-const request = require("request-promise"); // khai báo module request-promise
+const cheerio = require("cheerio"); 
+const request = require("request-promise"); 
 const fs = require("fs");
 const xlsx = require("json-as-xlsx");
 
