@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <title>Scrawl data</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 
 <body>
-    <button class="btn btn-primary" id="run-data">Chạy</button>
+    <button class="btn btn-primary" id="show-data">Chạy</button>
     <button class="btn btn-primary" id="export-excel">Xuất ra excel</button>
 
     <table class="table">
@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr id="data-render">
                 <td>
                     test
                 </td>
@@ -37,6 +37,7 @@
 
         </tbody>
     </table>
+    <script src="./renderer.js"></script>
 </body>
 
 </html>

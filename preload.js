@@ -1,9 +1,5 @@
-// import { exportExcel, handleData, exportJson } from "./main";
-function getData() {
-  alert("as");
-}
-window.addEventListener("DOMContentLoaded", () => {
-  document.querySelector("#run-data").addEventListener("click", () => {
-    getData();
-  });
+const { contextBridge, ipcRenderer } = require("electron");
+
+contextBridge.exposeInMainWorld("electronAPI", {
+  showDataInTable: () => ipcRenderer.invoke("dialog:showData"),
 });

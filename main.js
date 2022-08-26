@@ -1,5 +1,5 @@
-const cheerio = require("cheerio"); 
-const request = require("request-promise"); 
+const cheerio = require("cheerio");
+const request = require("request-promise");
 const fs = require("fs");
 const xlsx = require("json-as-xlsx");
 
@@ -61,6 +61,7 @@ async function handleData() {
   // write file response.json
   return arrData;
 }
+
 function exportJson() {
   let arrData = handleData();
   let jsonData = JSON.stringify(arrData);
@@ -68,8 +69,9 @@ function exportJson() {
     console.log("write success");
   });
 }
-function exportExcel() {
-  const arrData = handleData();
+
+async function exportExcel() {
+  const arrData = await handleData();
   const exportData = [
     {
       sheet: "Page 1",
@@ -86,7 +88,7 @@ function exportExcel() {
   };
   xlsx(exportData, settings);
 }
-
+// exportExcel();
 module.exports = {
   handleData,
   exportJson,

@@ -1,5 +1,10 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+const { exportExcel, exportJson, handleData } = require("./main");
+
+function test() {
+  console.log("dmm");
+}
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -19,6 +24,9 @@ app.whenReady().then(() => {
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
+      // ipcMain.handle("showData", handleData);
+      ipcMain.handle("dialog:showData", test);
+
       createWindow();
     }
   });
